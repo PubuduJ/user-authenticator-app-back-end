@@ -1,6 +1,8 @@
 package lk.pubudu.app.user.service;
 
 import lk.pubudu.app.dto.UserDTO;
+import lk.pubudu.app.role.entity.Role;
+import lk.pubudu.app.role.repository.RoleRepository;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
 import lk.pubudu.app.util.HashGenerator;
@@ -20,6 +22,7 @@ import java.util.Random;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final HashGenerator hashGenerator;
     private final Transformer transformer;
 
@@ -30,7 +33,14 @@ public class UserService {
         User incomingUser = transformer.toUserEntity(userDTO);
         String tempPassword = generateTemporaryPassword();
         incomingUser.setPassword(hashGenerator.generate(tempPassword));
-        return null;
+        incomingUser.setFresh(true);
+        User user = userRepository.save(incomingUser);
+        Integer[] roleIds = userDTO.getRoleIds();
+        for (Integer roleId : roleIds) {
+            Optional<Role> role = roleRepository.findById(roleId);
+            user.getRoleSet().add(role.get());
+        }
+        return transformer.toUserDTO(user);
     }
 
     @Transactional(rollbackFor = Throwable.class)
