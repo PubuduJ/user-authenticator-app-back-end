@@ -2,10 +2,7 @@ package lk.pubudu.app.user.entity;
 
 import jakarta.persistence.*;
 import lk.pubudu.app.role.entity.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @ToString(exclude = "roleSet")
+@EqualsAndHashCode(exclude = "roleSet")
 public class User implements UserDetails {
     @Serial
     private static final long serialVersionUID = 8778877586868040985L;
@@ -41,7 +39,7 @@ public class User implements UserDetails {
     @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     private String mobile;
     @Column(nullable = false, columnDefinition = "boolean default false")
-    private Boolean isFresh;
+    private Boolean fresh;
     @ManyToMany
     @JoinTable(
             name = "user_role",
@@ -50,14 +48,14 @@ public class User implements UserDetails {
     )
     private Set<Role> roleSet = new HashSet<>();
 
-    public User(String img, String firstName, String lastName, String email, String password, String mobile, Boolean isFresh) {
+    public User(String img, String firstName, String lastName, String email, String password, String mobile, Boolean fresh) {
         this.img = img;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.mobile = mobile;
-        this.isFresh = isFresh;
+        this.fresh = fresh;
     }
 
     @Override

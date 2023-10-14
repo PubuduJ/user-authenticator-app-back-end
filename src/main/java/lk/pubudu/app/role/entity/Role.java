@@ -1,18 +1,20 @@
 package lk.pubudu.app.role.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "role")
+@ToString(exclude = "rolePermissionSet")
+@EqualsAndHashCode(exclude = "rolePermissionSet")
 public class Role implements Serializable {
     @Serial
     private static final long serialVersionUID = 5981801158962140394L;
@@ -21,4 +23,11 @@ public class Role implements Serializable {
     private Integer id;
     @Column(nullable = false, columnDefinition = "VARCHAR(100)")
     private String role;
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "role")
+    private Set<RolePermission> rolePermissionSet = new HashSet<>();
+
+    public Role(String role) {
+        this.role = role;
+    }
 }
