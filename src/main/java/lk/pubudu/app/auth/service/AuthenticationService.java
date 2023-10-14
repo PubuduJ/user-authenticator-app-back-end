@@ -33,7 +33,7 @@ public class AuthenticationService {
         Set<String> fullPermissions = new HashSet<>();
         fullPermissions.add("home_");
         for (Role role : roleSet) {
-            Set<RolePermission> permissions = role.getRolePermissionSet();
+            Set<RolePermission> permissions = role.getRolePermissions();
             for (RolePermission permission : permissions) {
                 fullPermissions.add(permission.getPermissionName());
             }

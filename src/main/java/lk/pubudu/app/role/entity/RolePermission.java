@@ -21,7 +21,4 @@ public class RolePermission implements Serializable {
     private Integer id;
     @Column(name = "permission_name", nullable = false, columnDefinition = "VARCHAR(100)")
     private String permissionName;
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private Role role;
 }

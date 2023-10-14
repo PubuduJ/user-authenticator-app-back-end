@@ -24,10 +24,6 @@ public class Role implements Serializable {
     @Column(nullable = false, columnDefinition = "VARCHAR(100)")
     private String role;
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "role")
-    private Set<RolePermission> rolePermissionSet = new HashSet<>();
-
-    public Role(String role) {
-        this.role = role;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<RolePermission> rolePermissions = new HashSet<>();
 }
