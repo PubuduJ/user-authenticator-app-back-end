@@ -44,7 +44,7 @@ public class AuthenticationService {
         claims.put("scopes" , scopes);
 
         String jwtToken = jwtService.generateToken(claims, user);
-        return AuthenticationResponseDTO.builder().token(jwtToken).build();
+        return new AuthenticationResponseDTO(jwtToken);
     }
 
 }
