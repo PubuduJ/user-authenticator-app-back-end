@@ -4,10 +4,13 @@ import jakarta.persistence.EntityNotFoundException;
 import lk.pubudu.app.config.JwtService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
+import lk.pubudu.app.exception.NotFoundException;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.entity.RolePermission;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
+import lk.pubudu.app.util.EMailSender;
+import lk.pubudu.app.util.HashGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +23,8 @@ import java.util.*;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
+    private final HashGenerator hashGenerator;
+    private final EMailSender eMailSender;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -45,6 +50,43 @@ public class AuthenticationService {
 
         String jwtToken = jwtService.generateToken(claims, user);
         return new AuthenticationResponseDTO(jwtToken);
+    }
+
+    public String forgotPassword(String email) {
+        Optional<User> availability = userRepository.findByEmail(email);
+        if (availability.isEmpty()) throw new NotFoundException("No user available with the provided Email address");
+
+        String password = generateTemporaryPassword();
+        User user = availability.get();
+        user.setPassword(hashGenerator.generate(password));
+        user.setFresh(true);
+        userRepository.save(user);
+//        eMailSender.sendResetPasswordMail(user, password);
+        return "Success";
+    }
+
+    public String generateTemporaryPassword() {
+        String capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String simpleLetters = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String specialChars = "!@#$%^&*_=+-?<>";
+
+        String allChars = capitalLetters + simpleLetters + numbers + specialChars;
+        Random random = new Random();
+
+        int length = random.nextInt(7) + 8;
+        char[] password = new char[length];
+
+        password[0] = capitalLetters.charAt(random.nextInt(capitalLetters.length()));
+        password[1] = simpleLetters.charAt(random.nextInt(simpleLetters.length()));
+        password[2] = numbers.charAt(random.nextInt(numbers.length()));
+        password[3] = specialChars.charAt(random.nextInt(specialChars.length()));
+
+        for (int i = 4; i < length; i++) {
+            password[i] = allChars.charAt(random.nextInt(allChars.length()));
+        }
+
+        return new String(password);
     }
 
 }

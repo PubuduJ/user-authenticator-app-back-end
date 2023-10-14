@@ -4,6 +4,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lk.pubudu.app.dto.UserDTO;
 import lk.pubudu.app.exception.NotFoundException;
+import lk.pubudu.app.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -36,6 +37,30 @@ public class EMailSender {
             		+ "</table>"
             		+ "</body></html>", true);
             javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new NotFoundException("Invalid email id");
+        }
+    }
+
+    public void sendResetPasswordMail(User user, String password) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject("User Authenticator App - Password Reset");
+            helper.setFrom(new InternetAddress(env.getProperty("spring.mail.username"), "Admin"));
+
+            helper.setText("<html><body>"
+                    +"<table>"
+                    + "<tr><td style='padding:10px'>Your password reset request was success</td></tr>"
+                    + "<tr><td style='padding:10px'>You can login to the system using following credentials</td></tr>"
+                    + "<tr><td style='padding:10px'>System URL - <a href='http://localhost:3000'>User Authenticator App</a></td></tr>"
+                    + "<tr><td style='padding:10px'>Temporary password - "+password+"</td></tr>"
+                    + "</table>"
+                    + "</body></html>", true);
+            javaMailSender.send(message);
+
         } catch (Exception e) {
             throw new NotFoundException("Invalid email id");
         }

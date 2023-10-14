@@ -4,6 +4,7 @@ import lk.pubudu.app.auth.service.AuthenticationService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,11 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody AuthenticationRequestDTO request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @PostMapping(path = "/forgot/password/{email}")
+    public ResponseEntity<String> forgotPassword(@PathVariable String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.forgotPassword(email));
     }
 
 }
