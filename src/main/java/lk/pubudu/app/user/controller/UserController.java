@@ -16,9 +16,23 @@ public class UserController {
 
     private final UserService userService;
 
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        return null;
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        return null;
+    }
+
+    @PatchMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+        return null;
+    }
+
     @GetMapping(params = "q", produces = "application/json")
     public ResponseEntity<List<UserDTO>> getUsersByQuery(@RequestParam String q) {
-        System.out.println("OK");
         return null;
     }
 
