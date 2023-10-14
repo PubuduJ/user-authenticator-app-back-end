@@ -22,14 +22,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        return null;
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(userDTO));
     }
 
     @GetMapping(params = "q", produces = "application/json")

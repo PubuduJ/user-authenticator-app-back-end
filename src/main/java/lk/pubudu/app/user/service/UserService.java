@@ -1,6 +1,7 @@
 package lk.pubudu.app.user.service;
 
 import lk.pubudu.app.dto.UserDTO;
+import lk.pubudu.app.exception.NotFoundException;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.repository.RoleRepository;
 import lk.pubudu.app.user.entity.User;
@@ -13,10 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,12 +46,33 @@ public class UserService {
 
     @Transactional(rollbackFor = Throwable.class)
     public void deleteUser(Long id) {
-
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) throw new NotFoundException("User doesn't exist for this email id");
+        Set<Role> roles = user.get().getRoleSet();
+        roles.clear();
+        userRepository.deleteById(user.get().getId());
     }
 
     @Transactional(rollbackFor = Throwable.class)
     public UserDTO updateUser(UserDTO userDTO) {
-        return null;
+        Optional<User> availability = userRepository.findById(userDTO.getId());
+        if (availability.isEmpty()) throw new NotFoundException("User doesn't exist for this email id");
+        User incomingUser = transformer.toUserEntity(userDTO);
+        User existingUser = availability.get();
+
+        existingUser.setImg(incomingUser.getImg());
+        existingUser.setFirstName(incomingUser.getFirstName());
+        existingUser.setLastName(incomingUser.getLastName());
+        existingUser.setMobile(incomingUser.getMobile());
+
+        User updatedUser = userRepository.save(existingUser);
+        updatedUser.getRoleSet().clear();
+        Integer[] roleIds = userDTO.getRoleIds();
+        for (Integer roleId: roleIds) {
+            Optional<Role> role = roleRepository.findById(roleId);
+            updatedUser.getRoleSet().add(role.get());
+        }
+        return transformer.toUserDTO(updatedUser);
     }
 
     public List<UserDTO> getUsersByQuery(String q) {
