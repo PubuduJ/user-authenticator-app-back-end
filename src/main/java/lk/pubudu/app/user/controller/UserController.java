@@ -2,9 +2,11 @@ package lk.pubudu.app.user.controller;
 
 import lk.pubudu.app.dto.UserDTO;
 import lk.pubudu.app.user.service.UserService;
+import lk.pubudu.app.util.ValidationGroups;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Validated(ValidationGroups.Create.class) @RequestBody UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
     }
 
@@ -30,7 +32,7 @@ public class UserController {
     }
 
     @PatchMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@Validated(ValidationGroups.Update.class) @RequestBody UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(userDTO));
     }
 
