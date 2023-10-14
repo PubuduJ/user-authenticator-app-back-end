@@ -1,5 +1,6 @@
 package lk.pubudu.app.util;
 
+import lk.pubudu.app.dto.RoleDTO;
 import lk.pubudu.app.dto.UserDTO;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.user.entity.User;
@@ -43,6 +44,14 @@ public class Transformer {
         userDTO.setRoleIds(roleIds);
         userDTO.setFresh(user.getFresh());
         return userDTO;
+    }
+
+    public Role toRoleEntity(RoleDTO roleDTO) {
+        return modelMapper.map(roleDTO, Role.class);
+    }
+
+    public RoleDTO toRoleDTO(Role role) {
+        return modelMapper.map(role, RoleDTO.class);
     }
 
 }
