@@ -3,6 +3,7 @@ package lk.pubudu.app.user.service;
 import lk.pubudu.app.dto.UserDTO;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
+import lk.pubudu.app.util.HashGenerator;
 import lk.pubudu.app.util.Transformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
@@ -19,6 +20,7 @@ import java.util.Random;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final HashGenerator hashGenerator;
     private final Transformer transformer;
 
     @Transactional(rollbackFor = Throwable.class)
@@ -26,7 +28,8 @@ public class UserService {
         Optional<User> availability = userRepository.findByEmail(userDTO.getEmail());
         if (availability.isPresent()) throw new DuplicateKeyException("A user is already exists with this email id");
         User incomingUser = transformer.toUserEntity(userDTO);
-
+        String tempPassword = generateTemporaryPassword();
+        incomingUser.setPassword(hashGenerator.generate(tempPassword));
         return null;
     }
 
