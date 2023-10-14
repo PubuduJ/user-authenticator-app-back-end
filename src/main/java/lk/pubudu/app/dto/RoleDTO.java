@@ -17,5 +17,6 @@ public class RoleDTO implements Serializable {
     private static final long serialVersionUID = 1099389437728308115L;
     private Integer id;
     private String role;
+    private Integer userCount;
     private Set<RolePermissionDTO> rolePermissions = new HashSet<>();
 }
