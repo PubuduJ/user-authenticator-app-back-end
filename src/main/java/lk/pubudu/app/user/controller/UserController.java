@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
     }
 
     @DeleteMapping(path = "/{id}")

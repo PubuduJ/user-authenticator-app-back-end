@@ -5,6 +5,7 @@ import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.repository.RoleRepository;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
+import lk.pubudu.app.util.EMailSender;
 import lk.pubudu.app.util.HashGenerator;
 import lk.pubudu.app.util.Transformer;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final HashGenerator hashGenerator;
+    private final EMailSender eMailSender;
     private final Transformer transformer;
 
     @Transactional(rollbackFor = Throwable.class)
@@ -40,6 +42,7 @@ public class UserService {
             Optional<Role> role = roleRepository.findById(roleId);
             user.getRoleSet().add(role.get());
         }
+//        eMailSender.sendWelcomeMail(userDTO, tempPassword);
         return transformer.toUserDTO(user);
     }
 
