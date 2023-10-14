@@ -31,7 +31,7 @@ public class AuthenticationService {
         HashMap<String, List<String>> scopes = new HashMap<>();
 
         Set<String> fullPermissions = new HashSet<>();
-        fullPermissions.add("dashboard_");
+        fullPermissions.add("home_");
         for (Role role : roleSet) {
             Set<RolePermission> permissions = role.getRolePermissionSet();
             for (RolePermission permission : permissions) {
@@ -43,9 +43,7 @@ public class AuthenticationService {
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("scopes" , scopes);
 
-        System.out.println(user);
         String jwtToken = jwtService.generateToken(claims, user);
-
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 
