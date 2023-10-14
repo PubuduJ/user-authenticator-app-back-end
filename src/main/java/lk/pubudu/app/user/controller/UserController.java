@@ -3,6 +3,7 @@ package lk.pubudu.app.user.controller;
 import lk.pubudu.app.dto.UserDTO;
 import lk.pubudu.app.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class UserController {
 
     @GetMapping(params = "q", produces = "application/json")
     public ResponseEntity<List<UserDTO>> getUsersByQuery(@RequestParam String q) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUsersByQuery(q));
     }
 
 }

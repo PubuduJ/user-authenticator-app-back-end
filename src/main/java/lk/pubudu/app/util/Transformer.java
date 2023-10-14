@@ -41,6 +41,7 @@ public class Transformer {
             roleIds[i++] = role.getId();
         }
         userDTO.setRoleIds(roleIds);
+        userDTO.setFresh(user.getFresh());
         return userDTO;
     }
 

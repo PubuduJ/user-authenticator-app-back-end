@@ -1,11 +1,14 @@
 package lk.pubudu.app.user.service;
 
 import lk.pubudu.app.dto.UserDTO;
+import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
+import lk.pubudu.app.util.Transformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,6 +16,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final Transformer transformer;
 
     @Transactional(rollbackFor = Throwable.class)
     public UserDTO createUser(UserDTO userDTO) {
@@ -30,7 +34,14 @@ public class UserService {
     }
 
     public List<UserDTO> getUsersByQuery(String q) {
-        return null;
+        List<UserDTO> userDTOList = new ArrayList<>();
+        String query = "%".concat(q).concat("%");
+        List<User> usersByQuery = userRepository.findUsersByQuery(query);
+        for (User user : usersByQuery) {
+            UserDTO userDTO = transformer.toUserDTO(user);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList;
     }
 
 }
