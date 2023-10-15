@@ -1,5 +1,6 @@
 package lk.pubudu.app.auth.controller;
 
+import jakarta.validation.Valid;
 import lk.pubudu.app.auth.service.AuthenticationService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
@@ -28,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(path = "/update/password", consumes = "application/json")
-    public ResponseEntity<String> updatePassword(@RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<String> updatePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.updatePassword(passwordDTO));
     }
 
