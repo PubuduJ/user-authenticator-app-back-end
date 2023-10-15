@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lk.pubudu.app.config.JwtService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
+import lk.pubudu.app.dto.PasswordDTO;
 import lk.pubudu.app.exception.NotFoundException;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.entity.RolePermission;
@@ -62,6 +63,21 @@ public class AuthenticationService {
         user.setFresh(true);
         userRepository.save(user);
 //        eMailSender.sendResetPasswordMail(user, password);
+        return "Success";
+    }
+
+    public String updatePassword(PasswordDTO passwordDTO) {
+        Optional<User> availability = userRepository.findByEmail(passwordDTO.getEmail());
+        if (availability.isEmpty()) throw new NotFoundException("No user available with the provided Email address");
+        User user = availability.get();
+
+        if (!hashGenerator.isMatching(passwordDTO.getTemporaryPassword(), user.getPassword())) {
+            throw new NotFoundException("Invalid temporary password");
+        }
+
+        user.setPassword(hashGenerator.generate(passwordDTO.getNewPassword()));
+        user.setFresh(false);
+        userRepository.save(user);
         return "Success";
     }
 
