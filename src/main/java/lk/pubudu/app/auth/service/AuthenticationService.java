@@ -62,11 +62,11 @@ public class AuthenticationService {
         user.setPassword(hashGenerator.generate(password));
         user.setFresh(true);
         userRepository.save(user);
-//        eMailSender.sendResetPasswordMail(user, password);
+        eMailSender.sendResetPasswordMail(user, password);
         return "Success";
     }
 
-    public String updatePassword(PasswordDTO passwordDTO) {
+    public String resetPassword(PasswordDTO passwordDTO) {
         Optional<User> availability = userRepository.findByEmail(passwordDTO.getEmail());
         if (availability.isEmpty()) throw new NotFoundException("No user available with the provided Email address");
         User user = availability.get();

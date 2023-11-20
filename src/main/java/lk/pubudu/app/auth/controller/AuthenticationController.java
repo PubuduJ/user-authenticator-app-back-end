@@ -28,9 +28,9 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.forgotPassword(email));
     }
 
-    @PostMapping(path = "/update/password", consumes = "application/json")
-    public ResponseEntity<String> updatePassword(@Valid @RequestBody PasswordDTO passwordDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.updatePassword(passwordDTO));
+    @PostMapping(path = "/reset/password", consumes = "application/json")
+    public ResponseEntity<String> resetPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.resetPassword(passwordDTO));
     }
 
 }
