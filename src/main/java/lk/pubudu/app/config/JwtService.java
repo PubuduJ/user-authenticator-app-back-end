@@ -65,6 +65,7 @@ public class JwtService {
                 .claim("lastName", user.getLastName())
                 .claim("email", user.getEmail())
                 .claim("fresh", user.getFresh())
+                .claim("img", user.getImg())
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000))
