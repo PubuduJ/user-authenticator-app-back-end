@@ -10,6 +10,8 @@ import lk.pubudu.app.user.repository.UserRepository;
 import lk.pubudu.app.util.Transformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +74,10 @@ public class RoleService {
             filteredRoleDTOs.add(roleDTO);
         }
         return filteredRoleDTOs;
+    }
+
+    public List<Role> getAll() {
+        return roleRepository.findAll();
     }
 
 }

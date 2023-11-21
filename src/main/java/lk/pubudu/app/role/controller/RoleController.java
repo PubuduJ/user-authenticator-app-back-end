@@ -1,6 +1,7 @@
 package lk.pubudu.app.role.controller;
 
 import lk.pubudu.app.dto.RoleDTO;
+import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,4 +39,10 @@ public class RoleController {
     public ResponseEntity<List<RoleDTO>> getRolesByRoleName(@RequestParam String q) {
         return ResponseEntity.status(HttpStatus.OK).body(roleService.getRolesByRoleName(q));
     }
+
+    @GetMapping(path = "/all", produces = "application/json")
+    public ResponseEntity<List<Role>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(roleService.getAll());
+    }
+
 }
