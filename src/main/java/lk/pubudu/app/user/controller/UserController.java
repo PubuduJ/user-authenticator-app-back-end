@@ -41,4 +41,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUsersByQuery(q));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping(path = "/reset/password/{id}")
+    public ResponseEntity<?> resetPasswordByUserId(@PathVariable Long id) {
+        userService.resetPassword(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

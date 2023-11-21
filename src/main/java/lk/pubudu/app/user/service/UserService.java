@@ -40,7 +40,7 @@ public class UserService {
             Optional<Role> role = roleRepository.findById(roleId);
             user.getRoleSet().add(role.get());
         }
-//        eMailSender.sendWelcomeMail(userDTO, tempPassword);
+        eMailSender.sendWelcomeMail(userDTO, tempPassword);
         return transformer.toUserDTO(user);
     }
 
@@ -84,6 +84,18 @@ public class UserService {
             userDTOList.add(userDTO);
         }
         return userDTOList;
+    }
+
+    public void resetPassword(Long id) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            String password = generateTemporaryPassword();
+            user.setPassword(hashGenerator.generate(password));
+            user.setFresh(true);
+            userRepository.save(user);
+            eMailSender.sendResetPasswordMail(user, password);
+        } else throw new NotFoundException("User doesn't exist to reset the password");
     }
 
     public String generateTemporaryPassword() {
