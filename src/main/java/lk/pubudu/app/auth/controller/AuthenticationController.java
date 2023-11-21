@@ -5,6 +5,7 @@ import lk.pubudu.app.auth.service.AuthenticationService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
 import lk.pubudu.app.dto.PasswordDTO;
+import lk.pubudu.app.dto.UserDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,11 @@ public class AuthenticationController {
     @PostMapping(path = "/reset/password", consumes = "application/json")
     public ResponseEntity<String> resetPassword(@Valid @RequestBody PasswordDTO passwordDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.resetPassword(passwordDTO));
+    }
+
+    @GetMapping(path = "/logged-user/{email}")
+    public ResponseEntity<UserDetailsDTO> getLoggedUserDetails(@PathVariable String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.getLoggedUserDetails(email));
     }
 
 }

@@ -5,9 +5,11 @@ import lk.pubudu.app.config.JwtService;
 import lk.pubudu.app.dto.AuthenticationRequestDTO;
 import lk.pubudu.app.dto.AuthenticationResponseDTO;
 import lk.pubudu.app.dto.PasswordDTO;
+import lk.pubudu.app.dto.UserDetailsDTO;
 import lk.pubudu.app.exception.NotFoundException;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.entity.RolePermission;
+import lk.pubudu.app.role.repository.RoleRepository;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
 import lk.pubudu.app.util.EMailSender;
@@ -79,6 +81,32 @@ public class AuthenticationService {
         user.setFresh(false);
         userRepository.save(user);
         return "Success";
+    }
+
+    public UserDetailsDTO getLoggedUserDetails(String email) {
+        Optional<User> availability = userRepository.findByEmail(email);
+        if (availability.isEmpty()) throw new NotFoundException("No user available with the provided Email address");
+        User user = availability.get();
+        Set<Role> roleSet = user.getRoleSet();
+        List<String> roleNameList = new ArrayList<>();
+        HashSet<String> permissionSet = new HashSet<>();
+        for (Role role : roleSet) {
+            roleNameList.add(role.getRole());
+            Set<RolePermission> rolePermissions = role.getRolePermissions();
+            for (RolePermission rolePermission : rolePermissions) {
+                permissionSet.add(rolePermission.getPermissionName());
+            }
+        }
+        UserDetailsDTO userDetails = new UserDetailsDTO();
+        userDetails.setImg(user.getImg());
+        userDetails.setFirstName(user.getFirstName());
+        userDetails.setLastName(user.getLastName());
+        userDetails.setEmail(user.getEmail());
+        userDetails.setMobile(user.getMobile());
+        userDetails.setRoleNames(roleNameList);
+        ArrayList<String> permissionList = new ArrayList<>(permissionSet);
+        userDetails.setPermissionNames(permissionList);
+        return userDetails;
     }
 
     public String generateTemporaryPassword() {
