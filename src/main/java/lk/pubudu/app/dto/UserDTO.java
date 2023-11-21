@@ -18,7 +18,7 @@ public class UserDTO implements Serializable {
     @Null(groups = ValidationGroups.Create.class, message = "Id should be null")
     @NotNull(groups = ValidationGroups.Update.class, message = "Id is required")
     private Long id;
-    @NotBlank(message = "Image url is required")
+    @NotNull(message = "Image url cannot have a null value")
     private String img;
     @NotBlank(message = "First name is required")
     @Pattern(regexp = "^[A-Za-z][A-Za-z ]+$", message = "Invalid first name")
