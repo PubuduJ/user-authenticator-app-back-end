@@ -5,8 +5,9 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -22,5 +23,5 @@ public class Role implements Serializable {
     @Column(nullable = false, columnDefinition = "VARCHAR(100)")
     private String role;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<RolePermission> rolePermissions = new HashSet<>();
+    private List<RolePermission> rolePermissions = new ArrayList<>();
 }

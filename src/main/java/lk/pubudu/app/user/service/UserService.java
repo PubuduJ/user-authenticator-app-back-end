@@ -41,7 +41,7 @@ public class UserService {
             user.getRoleSet().add(role.get());
         }
 //        eMailSender.sendWelcomeMail(userDTO, tempPassword);
-        return userDTO;
+        return transformer.toUserDTO(user);
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -72,7 +72,7 @@ public class UserService {
             Optional<Role> role = roleRepository.findById(roleId);
             updatedUser.getRoleSet().add(role.get());
         }
-        return userDTO;
+        return transformer.toUserDTO(updatedUser);
     }
 
     public List<UserDTO> getUsersByQuery(String q) {

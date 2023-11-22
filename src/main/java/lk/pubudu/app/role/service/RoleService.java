@@ -42,7 +42,7 @@ public class RoleService {
         Optional<Role> availability = roleRepository.findById(id);
         if (availability.isEmpty()) throw new NotFoundException("Role doesn't exist");
         Role existingRole = availability.get();
-        Set<RolePermission> rolePermissions = existingRole.getRolePermissions();
+        List<RolePermission> rolePermissions = existingRole.getRolePermissions();
         roleRepository.deleteById(id);
         for (RolePermission rolePermission : rolePermissions) {
             rolePermissionRepository.deleteById(rolePermission.getId());
@@ -54,7 +54,7 @@ public class RoleService {
         Optional<Role> availability = roleRepository.getRoleByNameAndId(roleDTO.getId(), roleDTO.getRole());
         if (availability.isPresent()) throw new DuplicateKeyException("A role is already exists with this role name");
         Role existingRole = roleRepository.findById(roleDTO.getId()).get();
-        Set<RolePermission> rolePermissions = existingRole.getRolePermissions();
+        List<RolePermission> rolePermissions = existingRole.getRolePermissions();
         Role role = transformer.toRoleEntity(roleDTO);
         existingRole.setRole(role.getRole());
         existingRole.setRolePermissions(role.getRolePermissions());

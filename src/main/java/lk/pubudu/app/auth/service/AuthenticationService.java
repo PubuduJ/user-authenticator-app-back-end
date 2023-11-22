@@ -41,7 +41,7 @@ public class AuthenticationService {
         Set<String> fullPermissions = new HashSet<>();
         fullPermissions.add("profile_");
         for (Role role : roleSet) {
-            Set<RolePermission> permissions = role.getRolePermissions();
+            List<RolePermission> permissions = role.getRolePermissions();
             for (RolePermission permission : permissions) {
                 fullPermissions.add(permission.getPermissionName());
             }
@@ -92,7 +92,7 @@ public class AuthenticationService {
         HashSet<String> permissionSet = new HashSet<>();
         for (Role role : roleSet) {
             roleNameList.add(role.getRole());
-            Set<RolePermission> rolePermissions = role.getRolePermissions();
+            List<RolePermission> rolePermissions = role.getRolePermissions();
             for (RolePermission rolePermission : rolePermissions) {
                 permissionSet.add(rolePermission.getPermissionName());
             }
