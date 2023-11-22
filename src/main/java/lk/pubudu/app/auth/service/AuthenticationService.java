@@ -39,7 +39,7 @@ public class AuthenticationService {
         HashMap<String, List<String>> scopes = new HashMap<>();
 
         Set<String> fullPermissions = new HashSet<>();
-        fullPermissions.add("home_");
+        fullPermissions.add("profile_");
         for (Role role : roleSet) {
             Set<RolePermission> permissions = role.getRolePermissions();
             for (RolePermission permission : permissions) {
