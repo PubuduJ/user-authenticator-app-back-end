@@ -40,7 +40,7 @@ public class UserService {
             Optional<Role> role = roleRepository.findById(roleId);
             user.getRoleSet().add(role.get());
         }
-//        eMailSender.sendWelcomeMail(userDTO, tempPassword);
+        eMailSender.sendWelcomeMail(userDTO, tempPassword);
         return transformer.toUserDTO(user);
     }
 

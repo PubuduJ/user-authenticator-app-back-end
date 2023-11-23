@@ -32,7 +32,7 @@ public class EMailSender {
                     + "<table>"
                     + "<tr><td style='padding:10px'>Welcome to User Authenticator Application</td></tr>"
                     + "<tr><td style='padding:10px'>You can login to the system using following credentials</td></tr>"
-                    + "<tr><td style='padding:10px'>System URL - <a href='http://localhost:3000/signin'>User Authenticator App</a></td></tr>"
+                    + "<tr><td style='padding:10px'>System URL - <a href='http://localhost:3000/sign-in'>User Authenticator App</a></td></tr>"
                     + "<tr><td style='padding:10px'>Temporary password - " + password + "</td></tr>"
                     + "</table>"
                     + "</body></html>", true);
@@ -55,7 +55,7 @@ public class EMailSender {
                     + "<table>"
                     + "<tr><td style='padding:10px'>Your password reset request was success</td></tr>"
                     + "<tr><td style='padding:10px'>You can login to the system using following credentials</td></tr>"
-                    + "<tr><td style='padding:10px'>System URL - <a href='http://localhost:3000'>User Authenticator App</a></td></tr>"
+                    + "<tr><td style='padding:10px'>System URL - <a href='http://localhost:3000/sign-in'>User Authenticator App</a></td></tr>"
                     + "<tr><td style='padding:10px'>Temporary password - " + password + "</td></tr>"
                     + "</table>"
                     + "</body></html>", true);
