@@ -50,6 +50,8 @@ For instance, a guest user is restricted from performing operations within the s
 - This project can be used by cloning the project to your local computer.
 - Clone the project using `https://github.com/PubuduJ/user-authenticator-app-back-end` terminal command.
 - Make sure to create a **user-authenticator-app-db** database in the MySQL community server. If neglect to create, the project will automatically generate it when it is firstly executed.
+- Open the `pom.xml` file from **IntelliJ IDEA**, make sure to open this as a project.
+- Change the `spring.datasource.password` in the `application.properties` to your local machine MySQL server `root` user password.
 - Make sure to connect appropriate **SMTP Server** by giving the server configuration details in the `application.properties` file.
 - Configuration details need to be filled as below,
 ```
