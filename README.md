@@ -18,7 +18,7 @@ For instance, a guest user is restricted from performing operations within the s
 
 #### ERD of the database
 
-<img src="assets/ERD.png" alt="erd" width="600px"/>
+<img src="assets/ERD.png" alt="erd" width="800px"/>
 
 ## Used Technologies
 
