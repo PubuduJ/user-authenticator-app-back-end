@@ -9,7 +9,6 @@ import lk.pubudu.app.dto.UserDetailsDTO;
 import lk.pubudu.app.exception.NotFoundException;
 import lk.pubudu.app.role.entity.Role;
 import lk.pubudu.app.role.entity.RolePermission;
-import lk.pubudu.app.role.repository.RoleRepository;
 import lk.pubudu.app.user.entity.User;
 import lk.pubudu.app.user.repository.UserRepository;
 import lk.pubudu.app.util.EMailSender;
@@ -49,7 +48,7 @@ public class AuthenticationService {
 
         scopes.put("permissions", new ArrayList<>(fullPermissions));
         HashMap<String, Object> claims = new HashMap<>();
-        claims.put("scopes" , scopes);
+        claims.put("scopes", scopes);
 
         String jwtToken = jwtService.generateToken(claims, user);
         return new AuthenticationResponseDTO(jwtToken);

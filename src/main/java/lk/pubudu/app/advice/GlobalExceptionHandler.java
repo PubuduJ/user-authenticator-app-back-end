@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateKeyException.class)
-    public Map<String, Object> duplicateEntityExceptionHandler(DuplicateKeyException exp){
+    public Map<String, Object> duplicateEntityExceptionHandler(DuplicateKeyException exp) {
         Map<String, Object> errAttributes = new LinkedHashMap<>();
         errAttributes.put("status", HttpStatus.CONFLICT.value());
         errAttributes.put("error", HttpStatus.CONFLICT.getReasonPhrase());
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public Map<String, Object> notFoundExceptionHandler(NotFoundException exp){
+    public Map<String, Object> notFoundExceptionHandler(NotFoundException exp) {
         Map<String, Object> errAttributes = new LinkedHashMap<>();
         errAttributes.put("status", HttpStatus.NOT_FOUND.value());
         errAttributes.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
@@ -51,5 +51,5 @@ public class GlobalExceptionHandler {
         errAttributes.put("timestamp", new Date().toString());
         return errAttributes;
     }
-    
+
 }

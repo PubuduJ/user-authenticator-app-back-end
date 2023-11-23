@@ -68,7 +68,7 @@ public class UserService {
         User updatedUser = userRepository.save(existingUser);
         updatedUser.getRoleSet().clear();
         Integer[] roleIds = userDTO.getRoleIds();
-        for (Integer roleId: roleIds) {
+        for (Integer roleId : roleIds) {
             Optional<Role> role = roleRepository.findById(roleId);
             updatedUser.getRoleSet().add(role.get());
         }
