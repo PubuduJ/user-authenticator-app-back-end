@@ -49,6 +49,16 @@ For instance, a guest user is restricted from performing operations within the s
 ## How to use ?
 - This project can be used by cloning the project to your local computer.
 - Clone the project using `https://github.com/PubuduJ/user-authenticator-app-back-end` terminal command.
+- Make sure to create a **user-authenticator-app-db** database in the MySQL community server. If neglect to create, the project will automatically generate it when it is firstly executed.
+- Make sure to connect appropriate **SMTP Server** by giving the server configuration details in the `application.properties` file.
+- Configuration details need to be filled as below,
+```
+    spring.mail.host=SMTP Server
+    spring.mail.port=port
+    spring.mail.username=login email
+    spring.mail.password=master password
+```
+- **A Super Administrator** needs to be created as the **Super User**, and all permissions need to be set in order to access all the system functionalities.
 
 ## Version
 v1.0.0
