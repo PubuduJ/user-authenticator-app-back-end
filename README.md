@@ -14,7 +14,8 @@ For instance, a guest user is restricted from performing operations within the s
 
 - Users hold exclusive authority over changing their own passwords. However, the Super Administrator retains the ability to reset a user's password, triggering the issuance of a temporary password sent via email. The user can then employ this temporary password to reset their password securely.
 
-**Front End** of the project can be visited by clicking [**here.**](https://github.com/PubuduJ/user-authenticator-app-front-end)
+**Front End** of the project can be visited by clicking [**here.**](https://github.com/PubuduJ/user-authenticator-app-front-end)<br>
+Click [**here**](https://github.com/PubuduJ/jwt-security-with-spring-boot) for a demo on securing **Spring Boot backend API endpoints using JWT.**
 
 #### ERD of the database
 
