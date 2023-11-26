@@ -1,4 +1,4 @@
-# Use Authenticator Application Back End <img src="assets/icon.png" alt="header-logo" width="27px"/>
+# User Authenticator App Back End <img src="assets/icon.png" alt="header-logo" width="27px"/>
 
 This is the **Back End** of the **mobile-responsive web-based user authentication system.** 
 Upon registration, users gain access to the system where their **assigned roles and permissions** dictate the functionalities available to them. 
