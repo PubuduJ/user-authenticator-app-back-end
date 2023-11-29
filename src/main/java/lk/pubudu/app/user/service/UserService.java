@@ -86,6 +86,7 @@ public class UserService {
         return userDTOList;
     }
 
+    @Transactional(rollbackFor = Throwable.class)
     public void resetPassword(Long id) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
